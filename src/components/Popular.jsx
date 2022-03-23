@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
+import { Link } from 'react-router-dom';
 
 function Popular() {
 
@@ -32,6 +33,7 @@ function Popular() {
     <div>
       <Wrapper>
         <h4> Popular Picks </h4>
+        <br/>
         <Splide options={{
           perPage: 4,
           arrows: false,
@@ -43,9 +45,11 @@ function Popular() {
             return (
               <SplideSlide key={recipe.id}>
                 <Card>
-                  <p> {recipe.title} </p>
-                  <img src={recipe.image} alt={recipe.title} />
-                  <Gradient />
+                  <Link to={'/recipe/' + recipe.id}>
+                    <p> {recipe.title} </p>
+                    <img src={recipe.image} alt={recipe.title} />
+                    <Gradient />
+                  </Link>
                 </Card>
               </SplideSlide>
             );

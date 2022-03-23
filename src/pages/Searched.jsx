@@ -26,10 +26,10 @@ function Searched() {
             <img src={item.image} alt="" srcset="" />
             <h4> {item.title} </h4>
           </Card>
-        )
+        ); 
       })}
     </Grid>
-  )
+  ); 
 }
 
 const Grid = styled.div`
