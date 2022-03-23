@@ -15,22 +15,23 @@ function Recipe() {
     const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`);
     const detailData = await data.json(); // this will save the fetched data 
     setDetails(detailData); // we keep it like that since its an object, if it was an array, we do (detailData.results)
-    console.log(detailData); 
+    console.log(detailData);
   };
 
   useEffect(() => {
     fetchDetails();
-  }, [params.name])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.name]);
 
   return (
     <DetailWrapper>
       <div>
         <h2> {details.title} </h2>
         <img src={details.image} alt="" srcset="" />
+
       </div>
 
       <Info>
-
         <Button
           className={activeTab === 'instructions' ? 'active' : ''}
           onClick={() => setActiveTab('instructions')}>
@@ -42,6 +43,23 @@ function Recipe() {
           onClick={() => setActiveTab('Ingredients')}>
           Ingredients
         </Button>
+
+        {activeTab === 'instructions' && (
+          <div>
+            <h4>
+              dangerouslySetInnerHTML={{ __html: details.summary }}
+              dangerouslySetInnerHTML={{ __html: details.instructions }}
+            </h4>
+          </div>
+        )}; 
+
+        {activeTab === 'instructions' && (
+          <ul>
+            {details.extendedIngredients.map((ingredient) =>
+              <li key={ingredient.id}> {ingredient.original} </li>
+            )}
+          </ul>
+        )}
 
       </Info>
     </DetailWrapper>
@@ -83,3 +101,8 @@ const Info = styled.div`
   margin-left: 10rem; 
 `
 export default Recipe
+
+// <h3>
+// dangerouslySetInnerHTML={{__html: details.summary}}
+// dangerouslySetInnerHTML={{__html: details.instructions}}
+// </h3>
